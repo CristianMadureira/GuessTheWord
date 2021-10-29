@@ -2,20 +2,34 @@ package com.example.android.guesstheword.screens.game
 
 import androidx.lifecycle.ViewModel
 import android.util.Log
-import android.widget.Toast
-
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
 class GameViewModel: ViewModel() {
 
-    var word = ""
+    private  val _word = MutableLiveData<String>()
+    val word: LiveData<String>
+        get() = _word
 
-    var score = 0
+    private val _score = MutableLiveData<Int>()
+    val score: LiveData<Int>
+        get() = _score
+
+    private val _eventGameFinish = MutableLiveData<Boolean>()
+        val eventGameFinish: LiveData<Boolean>
+            get() = _eventGameFinish
 
     lateinit var wordList: MutableList<String>
 
     init{
+        _word.value = ""
+        _score.value = 0
         resetList()
         nextWord()
+    }
+
+    private fun onGameFinish(){
+        _eventGameFinish.value = true
     }
 
     override fun onCleared() {
@@ -51,21 +65,25 @@ class GameViewModel: ViewModel() {
         wordList.shuffle()
     }
 
+    fun onGameFinishComplete() {
+        _eventGameFinish.value = false
+    }
+
     private fun nextWord() {
-        if (!wordList.isEmpty()) {
-            //Select and remove a word from the list
-            word = wordList.removeAt(0)
+        if (wordList.isEmpty()) {
+            onGameFinish()
+        } else {
+            _word.value = wordList.removeAt(0)
         }
     }
 
     fun onSkip() {
-        score--
+        _score.value = (_score.value)?.minus(1)
         nextWord()
     }
 
     fun onCorrect() {
-        score++
+        _score.value = (_score.value)?.plus(1)
         nextWord()
     }
-
 }
