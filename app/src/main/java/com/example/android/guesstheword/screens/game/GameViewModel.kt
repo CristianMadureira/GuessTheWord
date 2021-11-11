@@ -7,8 +7,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.navigation.NavController
 
-class GameViewModel: ViewModel() {
+class GameViewModel(): ViewModel() {
 
     private  val _word = MutableLiveData<String>()
     val word: LiveData<String>
@@ -28,8 +29,11 @@ class GameViewModel: ViewModel() {
 
     val currentTimeString = Transformations.map(currentTime) { time ->
         DateUtils.formatElapsedTime(time)
-
     }
+
+    private val _eventPlayAgain = MutableLiveData<Boolean>()
+    val eventPlayAgain: LiveData<Boolean>
+        get() = _eventPlayAgain
 
     private val timer: CountDownTimer
 
@@ -123,4 +127,11 @@ class GameViewModel: ViewModel() {
         nextWord()
     }
 
+    fun onPlayAgain(){
+        _eventPlayAgain.value = true
+    }
+
+    fun onPlayAgainComplete() {
+        _eventPlayAgain.value = false
+    }
 }

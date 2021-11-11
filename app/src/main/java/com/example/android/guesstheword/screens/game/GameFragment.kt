@@ -29,13 +29,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.android.guesstheword.R
 import com.example.android.guesstheword.databinding.GameFragmentBinding
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Fragment where the game is played
  */
 class GameFragment : Fragment() {
 
-    private lateinit var viewModel: GameViewModel
+    private val viewModel: GameViewModel by sharedViewModel()
 
     private lateinit var binding: GameFragmentBinding
 
@@ -49,7 +51,6 @@ class GameFragment : Fragment() {
                 false
         )
 
-        viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         binding.gameViewModel = viewModel
 
         binding.lifecycleOwner = viewLifecycleOwner

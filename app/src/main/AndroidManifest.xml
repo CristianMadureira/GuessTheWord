@@ -9,14 +9,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_guess_it_round"
         android:supportsRtl="true"
+        android:name=".GameApplication"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".Tela2Activity"
-            android:exported="true" />
-        <activity
-            android:name=".Tela1Activity"
-            android:exported="true" /> <!-- Screen locked to landscape for easier play -->
+
+        <!-- Screen locked to landscape for easier play -->
         <!-- configChanges attribute makes the following actions NOT cause a config change -->
         <!-- screenOrientation attribute sets the default animation -->
         <activity android:name=".MainActivity">
